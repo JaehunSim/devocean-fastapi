@@ -3,10 +3,10 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-APP_KEY = 'StB056m47i3XONHfeEYxV1K9il4l9AeW2xePEnjZ' # https://openapi.sk.com/ 발급받으세요~
 
-def get_total_time(start_poi, end_poi):
-    url = f'https://apis.openapi.sk.com/tmap/routes?version=1&appKey={APP_KEY}'
+def get_total_time(start_poi, end_poi, app_key):
+    # app_key: https://openapi.sk.com/ 발급받으세요~
+    url = f'https://apis.openapi.sk.com/tmap/routes?version=1&appKey={app_key}'
     data = {
         'startX': start_poi['longitude'],
         'startY': start_poi['latitude'],
@@ -18,11 +18,12 @@ def get_total_time(start_poi, end_poi):
     total_time = result['features'][0]['properties']['totalTime']
     return total_time
 
-def get_poi_by_keyword(keyword):
+def get_poi_by_keyword(keyword, app_key):
     """
     poi: points of interest
+    app_key: https://openapi.sk.com/ 발급받으세요~
     """
-    url = f'https://apis.openapi.sk.com/tmap/pois?version=1&appKey={APP_KEY}&searchKeyword={keyword}'
+    url = f'https://apis.openapi.sk.com/tmap/pois?version=1&appKey={app_key}&searchKeyword={keyword}'
     response = requests.get(url, verify=False)
     result = response.json()
     first_poi = result['searchPoiInfo']['pois']['poi'][0]
